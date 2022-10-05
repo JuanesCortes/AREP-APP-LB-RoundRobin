@@ -1,6 +1,7 @@
 package edu.eci.arem.approundrobin;
 import static spark.Spark.get;
 import static spark.Spark.port;
+import static spark.Spark.staticFiles;
 /**
  *
  * @author juan.cortes-p
@@ -9,7 +10,12 @@ public class AppRoundRobin {
 
     public static void main(String... args){
           port(getPort());
-          get("hello", (req,res) -> "Hello Docker!");
+          staticFiles.location("/webapp");
+          get("/app",(req,res)  -> {
+        	res.type("application/json");
+        	
+            return "Esta es la cadena ====> "+req.queryParams("name");
+        });
     }
 
     private static int getPort() {
